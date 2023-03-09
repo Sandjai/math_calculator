@@ -14,17 +14,20 @@ export const ModeToggler: React.FunctionComponent<IModeTogglerProps> = ({
 }) => {
   return (
     <div className={styles.root}>
-      <div className={styles.toggler}>
-        {Object.keys(modes).map((curMode) => (
-          <Button
-            onClick={() => setMode(curMode)}
-            key={curMode}
-            curMode={curMode}
-            btnMode={mode}
-            className={styles.button}
-            curModeTxt={modes?.[curMode]}
-          />
-        ))}
+      <div></div>
+      <div>
+        <div className={styles.toggler}>
+          {Object.keys(modes).map((curMode) => (
+            <Button
+              onClick={() => setMode(curMode)}
+              key={curMode}
+              curMode={curMode}
+              btnMode={mode}
+              className={styles.button}
+              curModeTxt={modes?.[curMode]}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

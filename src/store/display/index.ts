@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {dragStatuses} from '../constants/dragStatuses'
 const initialState = {
     status: dragStatuses.dropped,
-    value: ""
+    value: "0"
 
 };
 
