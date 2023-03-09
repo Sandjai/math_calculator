@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./App.module.sass";
+
 import { Calculator } from "./components/Calculator/Calculator";
 import { Provider } from "react-redux";
 import { store } from "./store";
@@ -12,10 +12,8 @@ export const App: React.FC = () => {
 
   return (
     <Provider store={store}>
-      <div className={styles.App}>
-        <ModeToggler mode={mode} setMode={setMode} />
-        <Calculator mode={mode} />
-      </div>
+      <ModeToggler mode={mode} setMode={setMode} />
+      <Calculator mode={mode} />
     </Provider>
   );
 };

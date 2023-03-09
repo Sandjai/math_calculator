@@ -2,7 +2,18 @@
 
 .calc
   width: 539px
-  height: 448px
+  //height: 448px
   display: grid
   grid-template: 1fr 372px / 1fr 1fr
   column-gap: 56px
+  row-gap: 56px
+
+.calc__elements
+  display: grid
+  grid-template: auto/ 1fr
+  row-gap: 8px
+
+.display, .operations
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)
+
+  border-radius: 6px

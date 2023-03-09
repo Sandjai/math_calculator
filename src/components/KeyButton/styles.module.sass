@@ -1,0 +1,19 @@
+@import '../../variables'
+
+.root
+  height: $keyBtn_height
+  line-height: $keyBtn_height
+  font-family: $font__main_M
+  text-align: center
+  font-size: 14px
+  user-select: none
+  border: 1px solid $btn_border
+  border-radius: 6px
+
+  &:hover
+    cursor: pointer
+    border: 2px solid $blue
+
+  &_active
+    background-color: $blue
+    border: 2px solid $blue

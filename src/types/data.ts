@@ -4,5 +4,3 @@ export interface Imodes {
     [key: string]: string
   }
   
-  
-  
