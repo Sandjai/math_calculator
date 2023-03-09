@@ -7,3 +7,4 @@ export const modes:Imodes = {
   };
   
 export const operValues:string[] = ['/', 'X', '-', '+'];
+export const numbersValues:string[] = ['7', '8', '9', '4','5', '6', '1', '2','3', '0', ','];
