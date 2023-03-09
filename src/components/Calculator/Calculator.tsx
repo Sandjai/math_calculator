@@ -12,6 +12,7 @@ import { selectDisplayValue } from "../../store/display/selectors";
 import { useSelector } from "react-redux";
 import { Operations } from "../Operations/Operations";
 import { Numbers } from "../Numbers/Numbers";
+import { Results } from "../Result/Result";
 
 interface IDisplayProps {
   mode: string;
@@ -25,6 +26,7 @@ export const Calculator: React.FC<IDisplayProps> = ({ mode }) => {
         <Display className={styles.display} />
         <Operations className={styles.operations} />
         <Numbers className={styles.numbers} />
+        <Results className={styles.results} />
       </div>
       <div className={styles.calc__canvas}></div>
     </div>

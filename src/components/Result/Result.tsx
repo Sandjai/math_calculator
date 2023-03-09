@@ -1,6 +1,6 @@
 import * as React from "react";
 import styles from "./styles.module.sass";
-import classNames from "classnames-ts";
+import classNames from "classnames";
 
 interface IResultsProps {
   className?: string;
@@ -9,5 +9,5 @@ interface IResultsProps {
 export const Results: React.FunctionComponent<IResultsProps> = (props) => {
   const { className } = props;
 
-  return <div className={classNames(className, styles.root)}></div>;
+  return <div className={classNames(className, styles.root)}>=</div>;
 };
