@@ -1,25 +1,21 @@
-import React from "react";
-
+import React, { useState } from "react";
 import styles from "./App.module.sass";
+import { Calculator } from "./components/Calculator/Calculator";
+import { Provider } from "react-redux";
+import { store } from "./store";
+import { modes } from "./components/constants/calcModes";
+import { Button } from "./components/Button/Button";
+import { ModeToggler } from "./components/ModeToggler/ModeToggler";
 
-function App() {
+export const App: React.FC = () => {
+  const [mode, setMode] = useState(Object.keys(modes)[1]);
+
   return (
-    <div className={styles.App}>
-      <header className={styles.App_header}>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div className={styles.App}>
+        <ModeToggler mode={mode} setMode={setMode} />
+        <Calculator mode={mode} />
+      </div>
+    </Provider>
   );
-}
-
-export default App;
+};
