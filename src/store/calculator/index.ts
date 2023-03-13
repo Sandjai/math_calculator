@@ -5,12 +5,14 @@ interface IinitialState {
   mode: string,
     inCanvas: string[],
     activeEl: null | string,
+    height: number
 }
 
 const initialState:IinitialState = {
     mode: modes.constructor,
     inCanvas:[],
     activeEl: null,
+    height: 0
 };
 
 export const calculatorSlice = createSlice({
@@ -23,7 +25,8 @@ export const calculatorSlice = createSlice({
     },
     addToCanvas: (state, action) => {
       if (action.payload) {
-        state.inCanvas.push(action.payload);
+        state.inCanvas.push(action.payload.id);
+        state.height += action.payload.ElHeight
       }
       
     }, 

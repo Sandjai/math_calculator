@@ -7,3 +7,4 @@ export const selectCalculatorMode = (state: RootState) => selectCalculatorModule
 export const selectCalculatorActiveEl = (state: RootState) => selectCalculatorModule(state).activeEl;
 
 export const selectCalculatorInCanvas = (state: RootState) => selectCalculatorModule(state).inCanvas;
+export const selectCanvasHeight = (state: RootState) => selectCalculatorModule(state).height;

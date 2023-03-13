@@ -5,6 +5,7 @@ import { numbersSlice } from './numbers';
 import { operationsSlice } from './operations';
 import { resultSlice } from './result';
 import { calculatorSlice } from './calculator';
+import { canvasSlice } from './canvas';
 
 const rootReducer = combineReducers({
     display: displaySlice.reducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     operations: operationsSlice.reducer,
     result: resultSlice.reducer,
     calculator: calculatorSlice.reducer,
+    canvas: canvasSlice.reducer,
 })
 
 export const store = configureStore({

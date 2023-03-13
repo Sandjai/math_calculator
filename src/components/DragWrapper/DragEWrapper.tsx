@@ -75,8 +75,18 @@ export const DragWrapper: React.FunctionComponent<IDragWrapperProps> = ({
     e.preventDefault();
     if (target.tagName && target.tagName === "CANVAS") {
       if (e.dataTransfer.getData("id")) {
+        let ElHeight;
+        for (let element of elements) {
+          if (element.id === activeEl) {
+            ElHeight = element.height;
+          }
+        }
+
         dispatch(
-          calculatorSlice.actions.addToCanvas(e.dataTransfer.getData("id"))
+          calculatorSlice.actions.addToCanvas({
+            id: e.dataTransfer.getData("id"),
+            ElHeight,
+          })
         );
       }
     }

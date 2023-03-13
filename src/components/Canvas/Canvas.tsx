@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import {
   selectCalculatorActiveEl,
   selectCalculatorInCanvas,
+  selectCanvasHeight,
 } from "../../store/calculator/selectors";
 import { elements } from "../constants/elementsSettings";
 
@@ -28,6 +29,7 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   let activeEl = useSelector(selectCalculatorActiveEl);
   const inCanvas = useSelector(selectCalculatorInCanvas);
+  const canvasHeight = useSelector(selectCanvasHeight);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -59,11 +61,11 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
             }
           }
 
-          drawLine(context, ElHeight, 0);
+          drawLine(context, ElHeight, canvasHeight);
         });
       }
     };
-  }, [activeEl]);
+  }, [activeEl, canvasHeight]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -99,12 +101,12 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
     };
   }, []);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const context: CanvasRenderingContext2D | null = canvas
-      ? canvas.getContext("2d")
-      : null;
-  }, [inCanvas]);
+  // useEffect(() => {
+  //   const canvas = canvasRef.current;
+  //   const context: CanvasRenderingContext2D | null = canvas
+  //     ? canvas.getContext("2d")
+  //     : null;
+  // }, [inCanvas]);
 
   return (
     <div className={classNames(className, styles.root)}>
