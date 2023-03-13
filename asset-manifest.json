@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/math_calculator/static/css/main.5d2b663e.css",
-    "main.js": "/math_calculator/static/js/main.dee44007.js",
+    "main.css": "/math_calculator/static/css/main.55d39b84.css",
+    "main.js": "/math_calculator/static/js/main.974f2d13.js",
     "static/media/Inter-ExtraBold.ttf": "/math_calculator/static/media/Inter-ExtraBold.e4a4cb7133001f282a15.ttf",
     "static/media/Inter-Medium.ttf": "/math_calculator/static/media/Inter-Medium.6dcbc9bed1ec438907ee.ttf",
     "static/media/Inter-Regular.ttf": "/math_calculator/static/media/Inter-Regular.e89cb19905e7db5591b0.ttf",
     "static/media/eye.svg": "/math_calculator/static/media/eye.1e033d8501f85bfd21633e578c03792e.svg",
     "index.html": "/math_calculator/index.html",
     "static/media/selector.svg": "/math_calculator/static/media/selector.40dc10876101ac38240b7a55c8211b97.svg",
-    "main.5d2b663e.css.map": "/math_calculator/static/css/main.5d2b663e.css.map",
-    "main.dee44007.js.map": "/math_calculator/static/js/main.dee44007.js.map"
+    "main.55d39b84.css.map": "/math_calculator/static/css/main.55d39b84.css.map",
+    "main.974f2d13.js.map": "/math_calculator/static/js/main.974f2d13.js.map"
   },
   "entrypoints": [
-    "static/css/main.5d2b663e.css",
-    "static/js/main.dee44007.js"
+    "static/css/main.55d39b84.css",
+    "static/js/main.974f2d13.js"
   ]
 }
