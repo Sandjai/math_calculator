@@ -33,7 +33,7 @@ export const Numbers: React.FunctionComponent<INumbersProps> = ({
         [styles.moved]: IsMoved,
       })}
     >
-      {elementsEntities.numbers.map((value) => (
+      {elementsEntities.Numbers.map((value) => (
         <KeyButton key={`key${value}`} value={value} />
       ))}
     </div>

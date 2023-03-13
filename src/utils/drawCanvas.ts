@@ -1,6 +1,6 @@
 import DropIcon from "../assets/images/drop.png";
 import {canvasSize} from '../components/constants/canvasSize'
-import { elements } from "../components/constants/elementsSettings";
+import { elements, entities } from "../components/constants/elementsSettings";
 
 export const fillBlue = (context: CanvasRenderingContext2D | null) => {
     if (context !== null) {
@@ -48,10 +48,10 @@ export const fillBlue = (context: CanvasRenderingContext2D | null) => {
       context.fillText("из левой панели", 122, 265);
     }
 
- // requestAnimationFrame((context) => draw);
+
   };
 
-  let elementsInCanvas = [];
+
 
   export const checkMovePosition =  (e: React.DragEvent<HTMLDivElement>): void => {
     let target = e.target as any;
@@ -61,9 +61,17 @@ export const fillBlue = (context: CanvasRenderingContext2D | null) => {
 
   }
 
-  export const drawElement = (context: CanvasRenderingContext2D | null, el:string) => {
+  export const drawElement = (context: CanvasRenderingContext2D | null, el:any, currentHeight:number) => {
 
+  //   let element = entities[el  as keyof typeof entities];
 
+    if (context) {
+      context.beginPath();
+      context.rect(0, currentHeight, canvasSize.width, el.height);
+      context.fillStyle = "#f3f4f6";
+      context.fill();
+
+    }
   }
 
   export const drawLine = (context: CanvasRenderingContext2D | null, height:number, currentHeight:number) => {

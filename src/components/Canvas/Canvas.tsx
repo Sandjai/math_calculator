@@ -18,7 +18,7 @@ import {
   selectCalculatorInCanvas,
   selectCanvasHeight,
 } from "../../store/calculator/selectors";
-import { elements } from "../constants/elementsSettings";
+import { elements, entities } from "../constants/elementsSettings";
 
 interface ICanvasProps {
   className?: string;
@@ -36,31 +36,42 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
     const context: CanvasRenderingContext2D | null = canvas
       ? canvas.getContext("2d")
       : null;
-    let ElHeight: number;
-    if (canvas) {
+    // let ElHeight: number;
+    let el = entities[activeEl as keyof typeof entities];
+    if (canvas && el) {
       canvas.addEventListener("dragenter", (e) => {
         fillBlue(context);
-        for (let element of elements) {
-          if (element.id === activeEl) {
-            ElHeight = element.height;
-          }
-        }
+        // for (let element of elements) {
+        //   if (element.id === activeEl) {
+        //     ElHeight = element.height;
+        //   }
+        // }
 
-        drawLine(context, ElHeight, canvasElementsHeight);
+        drawLine(context, el.height, canvasElementsHeight);
       });
+
+      if (canvas) {
+        canvas.addEventListener("drop", (e) => {
+          if (activeEl) {
+            console.log(canvasElementsHeight);
+            drawElement(context, el, canvasElementsHeight);
+          }
+        });
+      }
     }
     return () => {
       if (canvas) {
         canvas.removeEventListener("dragenter", (e) => {
-          console.log("activeEl", activeEl);
           fillBlue(context);
-          for (let element of elements) {
-            if (element.id === activeEl) {
-              ElHeight = element.height;
-            }
-          }
 
-          drawLine(context, ElHeight, canvasElementsHeight);
+          drawLine(context, el.height, canvasElementsHeight);
+        });
+
+        canvas.removeEventListener("drop", (e) => {
+          if (activeEl) {
+            console.log(canvasElementsHeight);
+            drawElement(context, el, canvasElementsHeight);
+          }
         });
       }
     };
@@ -75,7 +86,12 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
     drawDefault(context);
 
     if (canvas) {
-      canvas.addEventListener("drop", (e) => {});
+      // canvas.addEventListener("drop", (e) => {
+      //   if (activeEl) {
+
+      //     drawElement(context, activeEl);
+      //   }
+      // });
       // canvas.addEventListener("dragover", (e) => {
       //   e.preventDefault();
       //   checkMovePosition(e);

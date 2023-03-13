@@ -70,7 +70,7 @@ export const DragWrapper: React.FunctionComponent<IDragWrapperProps> = ({
 
   function dropHandler(e: React.DragEvent<HTMLDivElement>) {
     const curTargent = e.currentTarget as any;
-    // curTargent.classList.add(styles.dragging);
+
     const target = e.target as HTMLElement;
     e.preventDefault();
     if (target.tagName && target.tagName === "CANVAS") {
@@ -91,12 +91,7 @@ export const DragWrapper: React.FunctionComponent<IDragWrapperProps> = ({
         );
       }
     }
-    let itemId = e.dataTransfer.getData("id");
-    // console.log("dropHandler");
-
-    // console.log(target.tagName);
-    // console.log(curTargent);
-    // e.target.append
+    //  let itemId = e.dataTransfer.getData("id");
   }
 
   // function enterHandler (e: React.DragEvent<HTMLDivElement>) {

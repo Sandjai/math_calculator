@@ -31,7 +31,7 @@ export const Results: React.FunctionComponent<IResultsProps> = ({
         [styles.moved]: IsMoved,
       })}
     >
-      {elementsEntities.results}
+      {elementsEntities.Results}
     </div>
   );
 };

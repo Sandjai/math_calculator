@@ -3,13 +3,43 @@ import { canvasSize } from "./canvasSize";
 
 
 export const elementsEntities = {
-    display: ['0'],
-    operations: ['/', 'X', '-', '+'],
-    numbers: ['7', '8', '9', '4','5', '6', '1', '2','3', '0', ','],
-    results: ['='],
+    Display: ['0'],
+    Operations: ['/', 'X', '-', '+'],
+    Numbers: ['7', '8', '9', '4','5', '6', '1', '2','3', '0', ','],
+    Results: ['='],
     }
     
     
+
+export const entities = {
+    Display: { width: +canvasSize,
+        height: 60,      
+        rows: 1,
+        columns: 1,
+        data: elementsEntities.Display},
+    Operations: { width: +canvasSize,
+        height: 56,       
+        rows: 1,
+        columns: 4,
+        data: elementsEntities.Operations,},
+    Numbers: {
+        width: +canvasSize,
+        height: 224,       
+        rows: 4,
+        columns: 3,
+        data: elementsEntities.Numbers,
+    },
+    Results: {
+        width: +canvasSize,
+        height: 72,      
+        rows: 1,
+        columns: 1,
+        data: elementsEntities.Results
+    },
+    }
+
+
+
 
 export const elements:Array<IelementsSettings> = [{
     width: +canvasSize,
@@ -17,7 +47,7 @@ export const elements:Array<IelementsSettings> = [{
     id:"Display",
     rows: 1,
     columns: 1,
-    data: elementsEntities.display,
+    data: elementsEntities.Display,
 },
 {
     width: +canvasSize,
@@ -25,7 +55,7 @@ export const elements:Array<IelementsSettings> = [{
     id:"Operations",
     rows: 1,
     columns: 4,
-    data: elementsEntities.operations,
+    data: elementsEntities.Operations,
 },
 {
     width: +canvasSize,
@@ -33,7 +63,7 @@ export const elements:Array<IelementsSettings> = [{
     id:"Numbers",
     rows: 4,
     columns: 3,
-    data: elementsEntities.numbers,
+    data: elementsEntities.Numbers,
 },
 {
     width: +canvasSize,
@@ -41,7 +71,7 @@ export const elements:Array<IelementsSettings> = [{
     id:"Results",
     rows: 1,
     columns: 1,
-    data: elementsEntities.results
+    data: elementsEntities.Results
 }]
 
 

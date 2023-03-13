@@ -34,7 +34,7 @@ export const Operations: React.FunctionComponent<IOperationssProps> = ({
         [styles.moved]: IsMoved,
       })}
     >
-      {elementsEntities.operations.map((value) => (
+      {elementsEntities.Operations.map((value) => (
         <KeyButton key={`key${value}`} value={value} />
       ))}
     </div>

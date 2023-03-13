@@ -3,7 +3,7 @@ import {dragStatuses} from '../constants/dragStatuses'
 import { elementsEntities } from "../../components/constants/elementsSettings";
 const initialState = {
     status: dragStatuses.dropped,
-    value: elementsEntities.display
+    value: elementsEntities.Display
 
 };
 
