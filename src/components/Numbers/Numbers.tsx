@@ -2,18 +2,25 @@ import * as React from "react";
 import styles from "./styles.module.sass";
 import classNames from "classnames";
 import { KeyButton } from "../KeyButton/KeyButton";
-import { numbersValues } from "../constants/calcModes";
+
+import { elementsEntities } from "../constants/elementsSettings";
 
 interface INumbersProps {
   className?: string;
+  id?: string;
 }
 
-export const Numbers: React.FunctionComponent<INumbersProps> = (props) => {
-  const { className } = props;
-
+export const Numbers: React.FunctionComponent<INumbersProps> = ({
+  className,
+  id,
+}) => {
   return (
-    <div className={classNames(className, styles.root)}>
-      {numbersValues.map((value) => (
+    <div
+      id={id}
+      draggable={true}
+      className={classNames(className, styles.root)}
+    >
+      {elementsEntities.numbers.map((value) => (
         <KeyButton key={`key${value}`} value={value} />
       ))}
     </div>

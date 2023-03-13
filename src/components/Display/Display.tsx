@@ -5,11 +5,21 @@ import { selectDisplayValue } from "../../store/display/selectors";
 import classNames from "classnames";
 interface IDisplayProps {
   className?: string;
+  id?: string;
 }
 
 export const Display: React.FunctionComponent<IDisplayProps> = ({
   className,
+  id,
 }) => {
   const value = useSelector(selectDisplayValue);
-  return <div className={classNames(className, styles.display)}>{value}</div>;
+  return (
+    <div
+      id={id}
+      draggable={true}
+      className={classNames(className, styles.display)}
+    >
+      {value}
+    </div>
+  );
 };

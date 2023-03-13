@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {dragStatuses} from '../constants/dragStatuses'
+import { elementsEntities } from "../../components/constants/elementsSettings";
 const initialState = {
     status: dragStatuses.dropped,
-    value: "0"
+    value: elementsEntities.display
 
 };
 

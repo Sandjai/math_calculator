@@ -4,12 +4,14 @@ import { displaySlice } from './display';
 import { numbersSlice } from './numbers';
 import { operationsSlice } from './operations';
 import { resultSlice } from './result';
+import { calculatorSlice } from './calculator';
 
 const rootReducer = combineReducers({
     display: displaySlice.reducer,
     numbers: numbersSlice.reducer,
     operations: operationsSlice.reducer,
     result: resultSlice.reducer,
+    calculator: calculatorSlice.reducer,
 })
 
 export const store = configureStore({

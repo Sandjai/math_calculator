@@ -2,20 +2,25 @@ import * as React from "react";
 import styles from "./styles.module.sass";
 import classNames from "classnames";
 import { KeyButton } from "../KeyButton/KeyButton";
-import { operValues } from "../constants/calcModes";
+
+import { elementsEntities } from "../constants/elementsSettings";
 
 interface IOperationssProps {
   className?: string;
+  id?: string;
 }
 
-export const Operations: React.FunctionComponent<IOperationssProps> = (
-  props
-) => {
-  const { className } = props;
-
+export const Operations: React.FunctionComponent<IOperationssProps> = ({
+  className,
+  id,
+}) => {
   return (
-    <div className={classNames(className, styles.root)}>
-      {operValues.map((value) => (
+    <div
+      id={id}
+      draggable={true}
+      className={classNames(className, styles.root)}
+    >
+      {elementsEntities.operations.map((value) => (
         <KeyButton key={`key${value}`} value={value} />
       ))}
     </div>
