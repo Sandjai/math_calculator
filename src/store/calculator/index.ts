@@ -3,7 +3,7 @@ import {dragStatuses} from '../constants/dragStatuses';
 import {modes} from '../../components/constants/calcModes';
 interface IinitialState {
   mode: string,
-    inCanvas: string[],
+    inCanvas: any,
     activeEl: null | string,
     height: number
 }
@@ -32,7 +32,7 @@ export const calculatorSlice = createSlice({
     }, 
     removeFromCanvas: (state, action) => {
       if (action.payload) {
-        state.inCanvas = state.inCanvas.filter((item)=> item !== action.payload);
+        state.inCanvas = state.inCanvas.filter((item:string)=> item !== action.payload);
       }
       
     }, 

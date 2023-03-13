@@ -65,14 +65,16 @@ export const fillBlue = (context: CanvasRenderingContext2D | null) => {
 
   //   let element = entities[el  as keyof typeof entities];
 
+let element = entities[el as keyof typeof entities];
     if (context) {
       context.beginPath();
-      context.rect(0, currentHeight, canvasSize.width, el.height);
+      context.rect(0, currentHeight, canvasSize.width, element.height);
       context.fillStyle = "#f3f4f6";
       context.fill();
+      
 
     }
-  }
+  } 
 
   export const drawLine = (context: CanvasRenderingContext2D | null, height:number, currentHeight:number) => {
     if (context) {

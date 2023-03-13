@@ -33,47 +33,30 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    let el = entities[activeEl as keyof typeof entities];
+
+    if (!canvas || !el) return;
+
+    const dropHandle = () => {
+      drawElement(context, activeEl, canvasElementsHeight);
+    };
+
+    const dragEnterHandler = () => {
+      fillBlue(context);
+      drawLine(context, el.height, canvasElementsHeight);
+    };
+
     const context: CanvasRenderingContext2D | null = canvas
       ? canvas.getContext("2d")
       : null;
-    // let ElHeight: number;
-    let el = entities[activeEl as keyof typeof entities];
-    if (canvas && el) {
-      canvas.addEventListener("dragenter", (e) => {
-        fillBlue(context);
-        // for (let element of elements) {
-        //   if (element.id === activeEl) {
-        //     ElHeight = element.height;
-        //   }
-        // }
 
-        drawLine(context, el.height, canvasElementsHeight);
-      });
+    canvas.addEventListener("dragenter", dragEnterHandler);
 
-      if (canvas) {
-        canvas.addEventListener("drop", (e) => {
-          if (activeEl) {
-            console.log(canvasElementsHeight);
-            drawElement(context, el, canvasElementsHeight);
-          }
-        });
-      }
-    }
+    canvas.addEventListener("drop", dropHandle);
+
     return () => {
-      if (canvas) {
-        canvas.removeEventListener("dragenter", (e) => {
-          fillBlue(context);
-
-          drawLine(context, el.height, canvasElementsHeight);
-        });
-
-        canvas.removeEventListener("drop", (e) => {
-          if (activeEl) {
-            console.log(canvasElementsHeight);
-            drawElement(context, el, canvasElementsHeight);
-          }
-        });
-      }
+      canvas.removeEventListener("drop", dropHandle);
+      canvas.removeEventListener("dragenter", dragEnterHandler);
     };
   }, [activeEl, canvasElementsHeight]);
 
