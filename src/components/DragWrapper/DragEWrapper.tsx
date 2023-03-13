@@ -54,16 +54,16 @@ export const DragWrapper: React.FunctionComponent<IDragWrapperProps> = ({
 
     const target = e.target as HTMLElement;
 
-    if (target.tagName && target.tagName === "CANVAS") {
-      console.log("activeEl", activeEl);
-      let ElHeight: number;
-      for (let element of elements) {
-        if (element.id === activeEl) {
-          ElHeight = element.height;
-        }
-      }
-      checkMovePosition(e);
-    }
+    // if (target.tagName && target.tagName === "CANVAS") {
+    //   console.log("activeEl", activeEl);
+    //   let ElHeight: number;
+    //   for (let element of elements) {
+    //     if (element.id === activeEl) {
+    //       ElHeight = element.height;
+    //     }
+    //   }
+    //   checkMovePosition(e);
+    // }
 
     target.hidden = false;
   }
@@ -75,6 +75,7 @@ export const DragWrapper: React.FunctionComponent<IDragWrapperProps> = ({
     e.preventDefault();
     if (target.tagName && target.tagName === "CANVAS") {
       if (e.dataTransfer.getData("id")) {
+        console.log(curTargent);
         let ElHeight;
         for (let element of elements) {
           if (element.id === activeEl) {

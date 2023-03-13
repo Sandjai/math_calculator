@@ -76,6 +76,8 @@ export const fillBlue = (context: CanvasRenderingContext2D | null) => {
       context.lineTo(canvasSize.width, currentHeight+height)
       context.stroke();
 
+      
+
     }
    
   }

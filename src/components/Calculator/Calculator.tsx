@@ -1,4 +1,10 @@
-import React, { ReactElement, ReactNode, useRef } from "react";
+import React, {
+  ReactElement,
+  ReactNode,
+  useRef,
+  useEffect,
+  useState,
+} from "react";
 
 import styles from "./styles.module.sass";
 import { Display } from "../Display/Display";
@@ -22,12 +28,12 @@ import {
 } from "../../store/calculator/selectors";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { modes } from "../constants/calcModes";
+import classNames from "classnames";
 
-interface ICalculatorProps {
-  mode: string;
-}
+interface ICalculatorProps {}
 
-export const Calculator: React.FC<ICalculatorProps> = ({ mode }) => {
+export const Calculator: React.FC<ICalculatorProps> = () => {
   // const arr: ReactNode[] = [
   //   <Display key="Display" className={styles.display} />,
   //   <Operations key="Operations" className={styles.operations} />,
@@ -35,10 +41,22 @@ export const Calculator: React.FC<ICalculatorProps> = ({ mode }) => {
   //   <Results key="Results" className={styles.results} />,
   // ];
 
+  const mode = useSelector(selectCalculatorMode);
+  const [isHidden, setIsHidden] = useState(false);
+
+  useEffect(() => {
+    const ifHidden = mode === modes.runtime ? true : false;
+    setIsHidden(ifHidden);
+  }, [mode]);
+
   return (
     <DragWrapper>
       <div className={styles.calc}>
-        <div className={styles.calc__elements}>
+        <div
+          className={classNames(styles.calc__elements, {
+            [styles.hidden]: isHidden,
+          })}
+        >
           <Display id="Display" className={styles.display} />
           <Operations id="Operations" className={styles.operations} />
           <Numbers id="Numbers" className={styles.numbers} />
@@ -59,6 +77,11 @@ export const Calculator: React.FC<ICalculatorProps> = ({ mode }) => {
           );
         })} */}
         </div>
+        <div
+          className={classNames({
+            [styles.hidden]: !isHidden,
+          })}
+        ></div>
         <div className={styles.calc__canvas}>
           <Canvas />
         </div>

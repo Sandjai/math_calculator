@@ -29,7 +29,7 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   let activeEl = useSelector(selectCalculatorActiveEl);
   const inCanvas = useSelector(selectCalculatorInCanvas);
-  const canvasHeight = useSelector(selectCanvasHeight);
+  const canvasElementsHeight = useSelector(selectCanvasHeight);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -39,7 +39,6 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
     let ElHeight: number;
     if (canvas) {
       canvas.addEventListener("dragenter", (e) => {
-        console.log("activeEl", activeEl);
         fillBlue(context);
         for (let element of elements) {
           if (element.id === activeEl) {
@@ -47,7 +46,7 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
           }
         }
 
-        drawLine(context, ElHeight, 0);
+        drawLine(context, ElHeight, canvasElementsHeight);
       });
     }
     return () => {
@@ -61,11 +60,11 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
             }
           }
 
-          drawLine(context, ElHeight, canvasHeight);
+          drawLine(context, ElHeight, canvasElementsHeight);
         });
       }
     };
-  }, [activeEl, canvasHeight]);
+  }, [activeEl, canvasElementsHeight]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
