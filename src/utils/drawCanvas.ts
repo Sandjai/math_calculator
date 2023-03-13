@@ -68,7 +68,7 @@ export const fillBlue = (context: CanvasRenderingContext2D | null) => {
 
   export const drawLine = (context: CanvasRenderingContext2D | null, height:number, currentHeight:number) => {
     if (context) {
-      console.log('drawLine');
+
       context.beginPath();
       context.strokeStyle = "#5d5fef";
       context.lineWidth = 2;

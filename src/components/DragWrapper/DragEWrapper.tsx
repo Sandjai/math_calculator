@@ -42,21 +42,15 @@ export const DragWrapper: React.FunctionComponent<IDragWrapperProps> = ({
     const target = e.target as HTMLElement;
 
     if (target) {
-      //  console.log("target", target);
       e.dataTransfer.clearData();
       e.dataTransfer.setData("id", target.id);
       dispatch(calculatorSlice.actions.changeActiveElement(target.id));
     }
   }
-  function dragLeaveHandler(e: React.DragEvent<HTMLDivElement>) {
-    // console.log("dragLeaveHandler");
-  }
-  function dragEndHandler(e: React.DragEvent<HTMLDivElement>) {
-    // console.log("dragEndHandler");
-  }
+  function dragLeaveHandler(e: React.DragEvent<HTMLDivElement>) {}
+  function dragEndHandler(e: React.DragEvent<HTMLDivElement>) {}
   function dragOverHandler(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
-    // console.log("dragOverHandler");
 
     const target = e.target as HTMLElement;
 
@@ -70,14 +64,6 @@ export const DragWrapper: React.FunctionComponent<IDragWrapperProps> = ({
       }
       checkMovePosition(e);
     }
-
-    // target.hidden = true;
-    // let elemBelow = document.elementFromPoint(e.clientX, e.clientY);
-
-    // if (elemBelow !== null) {
-    //   // elemBelow.style.background = "#fefefe";
-    //   // console.log("elemBelow", elemBelow);
-    // }
 
     target.hidden = false;
   }
