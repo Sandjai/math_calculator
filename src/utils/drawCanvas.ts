@@ -62,6 +62,32 @@ export const fillBlue = (context: CanvasRenderingContext2D | null) => {
 
   }
 
+
+  interface Ibutton {
+    (context: CanvasRenderingContext2D, 
+      i:number, 
+      element:any, 
+      currentHeight:number,
+      w:number,
+      h:number,
+      shift: number,
+      txtShift:number): void
+  }
+
+
+
+  let drawButton:Ibutton = function (context, i, element, currentHeight, w, h, shift, txtShift, ) {
+    context.strokeStyle = "#e2e3e5";
+    context.lineWidth = 1;
+    context.roundRect(6 + shift*(i%element.columns), currentHeight+4 , w, h, 6)
+    context.stroke();     
+    context.font = "14px Inter-Medium";
+    context.fillStyle = "#000000";
+    
+    context.fillText(element.data[i], txtShift + shift*(i%element.columns), currentHeight+27);
+  
+  }
+
   export const drawElements = (context: CanvasRenderingContext2D | null, inCanvas:string[], activeEl:string) => {
 
    let elList = [...inCanvas];
@@ -86,7 +112,7 @@ if ((activeEl !== 'Display')) {
       if (context) {
         switch (el) {
           case 'Display':
-            context.beginPath();
+        context.beginPath();
         context.rect(0, currentHeight, canvasSize.width, element.height);
         context.fillStyle = "#f3f4f6";
         context.fill();
@@ -97,16 +123,8 @@ if ((activeEl !== 'Display')) {
         
         break;
         case 'Operations':
-          for (let i=0; i<4; i++) {
-            context.strokeStyle = "#e2e3e5";
-            context.lineWidth = 1;
-            context.roundRect(6 + 60*i, currentHeight+4 , 52, 48, 6)
-            context.stroke();     
-            context.font = "14px Inter-Medium";
-            context.fillStyle = "#000000";
-            context.fillText(element.data[i], 32 + 60*i, currentHeight+27);
-            
-  
+          for (let i=0; i<element.data.length; i++) {
+            drawButton(context, i, element, currentHeight, 52, 48, 60, 32); 
           }
           currentHeight = currentHeight + element.height + padding;
  
@@ -123,19 +141,27 @@ if ((activeEl !== 'Display')) {
         currentHeight = currentHeight + element.height +padding;
         break
         case 'Numbers':
-          for (let i=0; i<9; i++) {
-            context.strokeStyle = "#e2e3e5";
-            context.lineWidth = 1;
-            context.roundRect(6 + 60*i, currentHeight+4 , 52, 48, 6)
-            context.stroke();     
-            context.font = "14px Inter-Medium";
-            context.fillStyle = "#000000";
-            context.fillText(element.data[i], 32 + 60*i, currentHeight+27);
-            
+          for (let i=0; i<3; i++) {
+            drawButton(context, i, element, currentHeight, 71, 48, 80, 42);   
+          }          
+          currentHeight = currentHeight + 58;
+          for (let i=3; i<6; i++) {
+            drawButton(context, i, element, currentHeight, 71, 48, 80, 42);   
+          }     
+          currentHeight = currentHeight + 58;          
+          for (let i=6; i<9; i++) {
+            drawButton(context, i, element, currentHeight, 71, 48, 80, 42);   
+          }   
+          currentHeight = currentHeight + 58;          
+          for (let i=9; i<10; i++) {
+            drawButton(context, i, element, currentHeight, 150, 48, 80, 42);   
+          }   
+          
+            drawButton(context, 11, element, currentHeight, 71, 48, 80, 42);   
   
-          }
           currentHeight = currentHeight + element.height + padding;
- 
+
+        
           break;
           
         }     
