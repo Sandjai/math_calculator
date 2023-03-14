@@ -16,16 +16,27 @@ import { useSelector } from "react-redux";
 import {
   selectCalculatorActiveEl,
   selectCalculatorInCanvas,
+  selectCalculatorMode,
   selectCanvasHeight,
 } from "../../store/calculator/selectors";
 import { elements, entities } from "../constants/elementsSettings";
+import { modes } from "../constants/calcModes";
 
 interface ICanvasProps {
   className?: string;
 }
 
-export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
-  const { className } = props;
+export const Canvas: React.FunctionComponent<ICanvasProps> = ({
+  className,
+}) => {
+  const mode = useSelector(selectCalculatorMode);
+  const [ifWorkingMode, setifWorkingMode] = useState(false);
+
+  useEffect(() => {
+    const ifWorkingMode = mode === modes.runtime ? true : false;
+    setifWorkingMode(ifWorkingMode);
+  }, [mode]);
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   let activeEl = useSelector(selectCalculatorActiveEl);
   const inCanvas = useSelector(selectCalculatorInCanvas);
@@ -115,12 +126,16 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
   // }, [inCanvas]);
 
   return (
-    <div className={classNames(className, styles.root)}>
+    <div
+      className={classNames(className, styles.root, {
+        [styles.runtime]: ifWorkingMode,
+        [styles.constr]: !ifWorkingMode,
+      })}
+    >
       <canvas
         ref={canvasRef}
         width={canvasSize.width}
         height={canvasSize.height}
-        className={styles.canvas}
       >
         You browser is not supported.
       </canvas>
