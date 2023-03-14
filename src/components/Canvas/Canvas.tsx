@@ -8,7 +8,7 @@ import {
   fillWhite,
   drawDefault,
   checkMovePosition,
-  drawElement,
+  drawElements,
   drawLine,
 } from "../../utils/drawCanvas";
 import { canvasSize } from "../constants/canvasSize";
@@ -38,7 +38,10 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
     if (!canvas || !el) return;
 
     const dropHandle = () => {
-      drawElement(context, activeEl, canvasElementsHeight);
+      if (activeEl) {
+        fillWhite(context);
+        drawElements(context, inCanvas, activeEl);
+      }
     };
 
     const dragEnterHandler = () => {
@@ -46,19 +49,31 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
       drawLine(context, el.height, canvasElementsHeight);
     };
 
+    const dragLeaveHandler = () => {
+      if (context && activeEl) {
+        if (inCanvas.length === 0) {
+          fillWhite(context);
+          drawDefault(context);
+        } else {
+          drawElements(context, inCanvas, activeEl);
+        }
+      }
+    };
+
     const context: CanvasRenderingContext2D | null = canvas
       ? canvas.getContext("2d")
       : null;
 
     canvas.addEventListener("dragenter", dragEnterHandler);
-
     canvas.addEventListener("drop", dropHandle);
+    canvas.addEventListener("dragleave", dragLeaveHandler);
 
     return () => {
       canvas.removeEventListener("drop", dropHandle);
       canvas.removeEventListener("dragenter", dragEnterHandler);
+      canvas.removeEventListener("dragleave", dragLeaveHandler);
     };
-  }, [activeEl, canvasElementsHeight]);
+  }, [activeEl, canvasElementsHeight, inCanvas]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -71,7 +86,6 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
     if (canvas) {
       // canvas.addEventListener("drop", (e) => {
       //   if (activeEl) {
-
       //     drawElement(context, activeEl);
       //   }
       // });
@@ -79,12 +93,6 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = (props) => {
       //   e.preventDefault();
       //   checkMovePosition(e);
       // });
-      canvas.addEventListener("dragleave", (e) => {
-        if (context) {
-          fillWhite(context);
-          drawDefault(context);
-        }
-      });
     }
 
     return () => {
