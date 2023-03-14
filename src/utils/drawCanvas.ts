@@ -141,23 +141,25 @@ if ((activeEl !== 'Display')) {
         currentHeight = currentHeight + element.height +padding;
         break
         case 'Numbers':
+          let height = currentHeight;
           for (let i=0; i<3; i++) {
-            drawButton(context, i, element, currentHeight, 71, 48, 80, 42);   
+            drawButton(context, i, element, height, 71, 48, 80, 42);   
           }          
-          currentHeight = currentHeight + 58;
+          height = height + 58;
           for (let i=3; i<6; i++) {
-            drawButton(context, i, element, currentHeight, 71, 48, 80, 42);   
+            drawButton(context, i, element, height, 71, 48, 80, 42);   
           }     
-          currentHeight = currentHeight + 58;          
+          height = height + 58;          
           for (let i=6; i<9; i++) {
-            drawButton(context, i, element, currentHeight, 71, 48, 80, 42);   
+            drawButton(context, i, element, height, 71, 48, 80, 42);   
           }   
-          currentHeight = currentHeight + 58;          
+          height = height + 58;          
           for (let i=9; i<10; i++) {
-            drawButton(context, i, element, currentHeight, 150, 48, 80, 42);   
+            drawButton(context, i, element, height, 150, 48, 80, 84);   
           }   
           
-            drawButton(context, 11, element, currentHeight, 71, 48, 80, 42);   
+            drawButton(context, 10, element, height, 71, 48, 160, 42); 
+              
   
           currentHeight = currentHeight + element.height + padding;
 
