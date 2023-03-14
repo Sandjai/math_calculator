@@ -25,7 +25,18 @@ export const calculatorSlice = createSlice({
     },
     addToCanvas: (state, action) => {
       if (action.payload) {
-        state.inCanvas.push(action.payload.id);
+
+        
+        let inCanvas = [...state.inCanvas];
+      
+        if ((action.payload.id === 'Display')) {   
+         
+          inCanvas.unshift(action.payload.id);     
+     
+         } else {
+          inCanvas.push(action.payload.id);
+         }   
+         state.inCanvas = [...inCanvas];     
         state.height += action.payload.ElHeight
       }
       

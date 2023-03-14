@@ -1,7 +1,7 @@
 import DropIcon from "../assets/images/drop.png";
 import {canvasSize} from '../components/constants/canvasSize'
-import { elements, elementsEntities, entities } from "../components/constants/elementsSettings";
-let padding = 10;
+import { elements, elementsData, entities, generalPadding } from "../components/constants/elementsSettings";
+let padding = generalPadding;
 
 export const fillBlue = (context: CanvasRenderingContext2D | null) => {
     if (context !== null) {
@@ -54,13 +54,7 @@ export const fillBlue = (context: CanvasRenderingContext2D | null) => {
 
 
 
-  export const checkMovePosition =  (e: React.DragEvent<HTMLDivElement>): void => {
-    let target = e.target as any;
-    let coordX = e.pageX - target.offsetLeft;
-    let coordY = e.pageY - target.offsetTop;
-    // elements
 
-  }
 
 
   interface Ibutton {
@@ -73,6 +67,16 @@ export const fillBlue = (context: CanvasRenderingContext2D | null) => {
       shift: number,
       txtShift:number): void
   }
+
+
+  interface IdrawElements {
+    (context: CanvasRenderingContext2D | null, 
+      inCanvas:string[], 
+      activeEl:string,
+      clickedOn?: string
+      ): void
+  }
+
 
 
 
@@ -88,20 +92,18 @@ export const fillBlue = (context: CanvasRenderingContext2D | null) => {
   
   }
 
-  export const drawElements = (context: CanvasRenderingContext2D | null, inCanvas:string[], activeEl:string) => {
+  export const drawElements:IdrawElements = (context, inCanvas, activeEl, clickedOn) => {
+if (clickedOn) {
+  console.log(clickedOn);
+}
+let elList = [...inCanvas];
+if (!clickedOn) {
 
-   let elList = [...inCanvas];
-   (activeEl === 'Display') ? elList.unshift(activeEl) : elList.push(activeEl);
-   
-if ((activeEl !== 'Display')) {
-  let displayIndex = elList.indexOf('Display');
-   
-   if (displayIndex !== -1 && displayIndex !== 0) {
-    elList.splice(displayIndex,displayIndex);
-    elList.unshift('Display')
-   }
+  (activeEl === 'Display') ? elList.unshift(activeEl) : elList.push(activeEl);
+  
 
 }
+
  
 
    let currentHeight = 0;

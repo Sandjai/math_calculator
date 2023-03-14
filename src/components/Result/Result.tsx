@@ -1,7 +1,7 @@
 import * as React from "react";
 import styles from "./styles.module.sass";
 import classNames from "classnames";
-import { elementsEntities } from "../constants/elementsSettings";
+import { elementsData } from "../constants/elementsSettings";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectCalculatorInCanvas } from "../../store/calculator/selectors";
@@ -31,7 +31,7 @@ export const Results: React.FunctionComponent<IResultsProps> = ({
         [styles.moved]: IsMoved,
       })}
     >
-      {elementsEntities.Results}
+      {elementsData.Results}
     </div>
   );
 };

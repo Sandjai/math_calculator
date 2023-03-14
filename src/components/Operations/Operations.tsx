@@ -4,7 +4,7 @@ import styles from "./styles.module.sass";
 import classNames from "classnames";
 import { KeyButton } from "../KeyButton/KeyButton";
 
-import { elementsEntities } from "../constants/elementsSettings";
+import { elementsData } from "../constants/elementsSettings";
 import { useSelector } from "react-redux";
 import { selectCalculatorInCanvas } from "../../store/calculator/selectors";
 
@@ -34,7 +34,7 @@ export const Operations: React.FunctionComponent<IOperationssProps> = ({
         [styles.moved]: IsMoved,
       })}
     >
-      {elementsEntities.Operations.map((value) => (
+      {elementsData.Operations.map((value) => (
         <KeyButton key={`key${value}`} value={value} />
       ))}
     </div>

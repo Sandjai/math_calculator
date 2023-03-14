@@ -3,7 +3,7 @@ import styles from "./styles.module.sass";
 import classNames from "classnames";
 import { KeyButton } from "../KeyButton/KeyButton";
 import { useEffect, useState } from "react";
-import { elementsEntities } from "../constants/elementsSettings";
+import { elementsData } from "../constants/elementsSettings";
 import { useSelector } from "react-redux";
 import { selectCalculatorInCanvas } from "../../store/calculator/selectors";
 
@@ -33,7 +33,7 @@ export const Numbers: React.FunctionComponent<INumbersProps> = ({
         [styles.moved]: IsMoved,
       })}
     >
-      {elementsEntities.Numbers.map((value) => (
+      {elementsData.Numbers.map((value) => (
         <KeyButton key={`key${value}`} value={value} />
       ))}
     </div>

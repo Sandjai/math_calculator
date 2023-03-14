@@ -1,40 +1,39 @@
-import { IelementsSettings } from "../../types/data";
+import { IelementsData, IelementsSettings } from "../../types/data";
 import { canvasSize } from "./canvasSize";
 
 
-export const elementsEntities = {
+export const elementsData:IelementsData = {
     Display: ['0'],
     Operations: ['/', 'X', '-', '+'],
     Numbers: ['7', '8', '9', '4','5', '6', '1', '2','3', '0', ','],
     Results: ['='],
-    }
+    }  
     
-    
-
+export const generalPadding = 10;
 export const entities = {
     Display: { width: +canvasSize,
         height: 60,      
         rows: 1,
         columns: 1,
-        data: elementsEntities.Display},
+        data: elementsData.Display},
     Operations: { width: +canvasSize,
         height: 56,       
         rows: 1,
         columns: 4,
-        data: elementsEntities.Operations,},
+        data: elementsData.Operations,},
     Numbers: {
         width: +canvasSize,
         height: 224,       
         rows: 4,
         columns: 3,
-        data: elementsEntities.Numbers,
+        data: elementsData.Numbers,
     },
     Results: {
         width: +canvasSize,
-        height: 72,      
+        height: 71,      
         rows: 1,
         columns: 1,
-        data: elementsEntities.Results
+        data: elementsData.Results
     },
     }
 
@@ -47,7 +46,7 @@ export const elements:Array<IelementsSettings> = [{
     id:"Display",
     rows: 1,
     columns: 1,
-    data: elementsEntities.Display,
+    data: elementsData.Display,
 },
 {
     width: +canvasSize,
@@ -55,7 +54,7 @@ export const elements:Array<IelementsSettings> = [{
     id:"Operations",
     rows: 1,
     columns: 4,
-    data: elementsEntities.Operations,
+    data: elementsData.Operations,
 },
 {
     width: +canvasSize,
@@ -63,7 +62,7 @@ export const elements:Array<IelementsSettings> = [{
     id:"Numbers",
     rows: 4,
     columns: 3,
-    data: elementsEntities.Numbers,
+    data: elementsData.Numbers,
 },
 {
     width: +canvasSize,
@@ -71,7 +70,7 @@ export const elements:Array<IelementsSettings> = [{
     id:"Results",
     rows: 1,
     columns: 1,
-    data: elementsEntities.Results
+    data: elementsData.Results
 }]
 
 

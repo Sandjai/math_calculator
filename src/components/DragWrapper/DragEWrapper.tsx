@@ -8,14 +8,9 @@ import {
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import classNames from "classnames";
-// import {
-//   dragEndHandler,
-//   dragLeaveHandler,
-//   dragOverHandler,
-//   dragStartHandler,
-// } from "../../utils/dragEveHandlers";
+
 import { calculatorSlice } from "../../store/calculator";
-import { checkMovePosition } from "../../utils/drawCanvas";
+
 import { elements } from "../constants/elementsSettings";
 
 interface IDragWrapperProps {
@@ -29,11 +24,6 @@ export const DragWrapper: React.FunctionComponent<IDragWrapperProps> = ({
   children,
   id,
 }) => {
-  // useEffect(() => {
-  //   document.addEventListener("drop", (e: any) => dropHandler(e));
-  //   return () =>
-  //     document.removeEventListener("drop", (e: any) => dropHandler(e));
-  // }, []);
   const dispatch = useDispatch();
 
   let activeEl = useSelector(selectCalculatorActiveEl);
@@ -53,18 +43,6 @@ export const DragWrapper: React.FunctionComponent<IDragWrapperProps> = ({
     e.preventDefault();
 
     const target = e.target as HTMLElement;
-
-    // if (target.tagName && target.tagName === "CANVAS") {
-    //   console.log("activeEl", activeEl);
-    //   let ElHeight: number;
-    //   for (let element of elements) {
-    //     if (element.id === activeEl) {
-    //       ElHeight = element.height;
-    //     }
-    //   }
-    //   checkMovePosition(e);
-    // }
-
     target.hidden = false;
   }
 
@@ -91,22 +69,7 @@ export const DragWrapper: React.FunctionComponent<IDragWrapperProps> = ({
         );
       }
     }
-    //  let itemId = e.dataTransfer.getData("id");
   }
-
-  // function enterHandler (e: React.DragEvent<HTMLDivElement>) {
-  //   const target = e.target as HTMLElement;
-  //   if (target.tagName && target.tagName === "CANVAS") {
-  //     console.log("activeEl", activeEl);
-  //     let ElHeight: number;
-  //     for (let element of elements) {
-  //       if (element.id === activeEl) {
-  //         ElHeight = element.height;
-  //       }
-  //     }
-  //     checkMovePosition(e);
-  //   }
-  // }
 
   const onDragStart = (e: React.DragEvent<HTMLDivElement>) =>
     dragStartHandler(e);
@@ -115,7 +78,7 @@ export const DragWrapper: React.FunctionComponent<IDragWrapperProps> = ({
   const onDragEnd = (e: React.DragEvent<HTMLDivElement>) => dragEndHandler(e);
   const onDragOver = (e: React.DragEvent<HTMLDivElement>) => dragOverHandler(e);
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => dropHandler(e);
-  // const on
+
   return (
     <div
       id={id}

@@ -34,13 +34,6 @@ import classNames from "classnames";
 interface ICalculatorProps {}
 
 export const Calculator: React.FC<ICalculatorProps> = () => {
-  // const arr: ReactNode[] = [
-  //   <Display key="Display" className={styles.display} />,
-  //   <Operations key="Operations" className={styles.operations} />,
-  //   <Numbers key="Numbers" className={styles.numbers} />,
-  //   <Results key="Results" className={styles.results} />,
-  // ];
-
   const mode = useSelector(selectCalculatorMode);
   const [isHidden, setIsHidden] = useState(false);
 
@@ -61,21 +54,6 @@ export const Calculator: React.FC<ICalculatorProps> = () => {
           <Operations id="Operations" className={styles.operations} />
           <Numbers id="Numbers" className={styles.numbers} />
           <Results id="Results" className={styles.results} />
-          {/* {arr.map((item: any) => {
-          return (
-            <DragWrapper
-              key={item.key}
-              id={item.key}
-              onDragStart={onDragStart}
-              onDragLeave={onDragLeave}
-              onDragEnd={onDragEnd}
-              onDragOver={onDragOver}
-              onDrop={onDrop}
-            >
-              {item}
-            </DragWrapper>
-          );
-        })} */}
         </div>
         <div
           className={classNames({

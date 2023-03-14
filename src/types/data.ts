@@ -5,11 +5,11 @@ export interface Imodes {
     [key: string]: string
   }
   
-  export interface IcanvasSizes {
+export interface IcanvasSizes {
     width: number, 
     height: number,
   }
-  export interface IelementsSettings{
+export interface IelementsSettings{
     id: string,
     width: number,
     height: number,
@@ -17,3 +17,26 @@ export interface Imodes {
     columns: number,
     data: string[]
     }
+
+export interface ICanvasProps {
+      className?: string;
+    }
+    
+export interface objArr {
+      id: string;
+      height: number;
+      [key: string]: string | number;
+    }
+    
+export interface Ibreakpoints__width {
+      from: number;
+      to: number;
+    }
+
+export interface IelementsData {
+  Display: string[];
+  Operations: string[];
+  Numbers: string[];
+  Results: string[];
+  [key: string]: string[];
+  }  
