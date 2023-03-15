@@ -53,7 +53,6 @@ export const DragWrapper: React.FunctionComponent<IDragWrapperProps> = ({
     e.preventDefault();
     if (target.tagName && target.tagName === "CANVAS") {
       if (e.dataTransfer.getData("id")) {
-        console.log(curTargent);
         let ElHeight;
         for (let element of elements) {
           if (element.id === activeEl) {
