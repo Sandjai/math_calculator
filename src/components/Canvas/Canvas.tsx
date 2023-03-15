@@ -17,17 +17,25 @@ import {
   selectCalculatorInCanvas,
   selectCalculatorMode,
   selectCanvasHeight,
+  selectNumbersvalue,
+  selectindexOfNumbers,
 } from "../../store/calculator/selectors";
 import {
-  elements,
+  numbersMatrix,
   elementsData,
   entities,
   generalPadding,
 } from "../constants/elementsSettings";
 import { modes } from "../constants/calcModes";
-import { ICanvasProps, Ibreakpoints__width, objArr } from "../../types/data";
+import {
+  ICanvasProps,
+  Ibreakpoints__width,
+  Ibreakpoints__width_operations,
+  Ibreakpoints__width_numbers,
+  objArr,
+} from "../../types/data";
 import { useDispatch } from "react-redux";
-import { operationsSlice } from "../../store/operations";
+import { calculatorSlice } from "../../store/calculator";
 
 export const Canvas: React.FunctionComponent<ICanvasProps> = ({
   className,
@@ -39,6 +47,8 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
   const inCanvas = useSelector(selectCalculatorInCanvas);
   const canvasElementsHeight = useSelector(selectCanvasHeight);
   let dispatch = useDispatch();
+  //const numbersValue = useSelector(selectNumbersvalue);
+  const numbersIndex: number = useSelector(selectindexOfNumbers);
 
   useEffect(() => {
     const ifWorkingMode = mode === modes.runtime ? true : false;
@@ -99,16 +109,40 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
 
     let breakpoints__height: number[] = [];
     let breakpoints__width_operations: Ibreakpoints__width[] = [
-      { from: 4, to: 56 },
-      { from: 60, to: 112 },
-      { from: 116, to: 168 },
-      { from: 172, to: 224 },
+      { from: 2, to: 54 },
+      { from: 58, to: 116 },
+      { from: 114, to: 173 },
+      { from: 177, to: 241 },
     ];
-    let breakpoints__width_numbers: Ibreakpoints__width[] = [
-      { from: 4, to: 75 },
-      { from: 79, to: 150 },
-      { from: 154, to: 225 },
+    let breakpoints__width_numbers: Ibreakpoints__width_numbers[] = [
+      {
+        x: { from: 2, to: 73 },
+        y: [
+          { from: 2, to: 50 },
+          { from: 54, to: 102 },
+          { from: 106, to: 154 },
+        ],
+      },
+      {
+        x: { from: 77, to: 148 },
+        y: [
+          { from: 2, to: 50 },
+          { from: 54, to: 102 },
+          { from: 106, to: 154 },
+        ],
+      },
+      {
+        x: { from: 152, to: 223 },
+        y: [
+          { from: 2, to: 50 },
+          { from: 54, to: 102 },
+          { from: 106, to: 154 },
+        ],
+      },
     ];
+
+    // { from: 79, to: 150 },
+    // { from: 154, to: 225 },
 
     for (let item of inCanvas) {
       let objItem = {
@@ -140,6 +174,7 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
       };
 
       let ind = 0;
+
       for (let item of arr) {
         if (activeEl && coordY <= item.height + getHeight(ind)) {
           clickedOnComponent = item.id;
@@ -155,12 +190,77 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
         for (let operation of breakpoints__width_operations) {
           if (coordX > operation.from && coordX < operation.to) {
             console.log(elementsData.Operations[index]);
+            fillWhite(context);
+
             dispatch(
-              operationsSlice.actions.update(elementsData.Operations[index])
+              calculatorSlice.actions.updateOperations(
+                elementsData.Operations[index]
+              )
             );
-            return;
+            break;
           }
           index++;
+        }
+      }
+
+      if (clickedOnComponent === "Numbers") {
+        const numbersHeight = getHeight(numbersIndex);
+        if (coordY > 175 + numbersHeight && coordY < 223 + numbersHeight) {
+          if (coordX > 4 && coordX < 150) {
+            fillWhite(context);
+            drawElements(
+              context,
+              inCanvas,
+              null,
+              null,
+              elementsData.Numbers[9]
+            );
+            dispatch(
+              calculatorSlice.actions.updateNumbers(elementsData.Numbers[9])
+            );
+          }
+          if (coordX > 154 && coordX < 225) {
+            fillWhite(context);
+            drawElements(
+              context,
+              inCanvas,
+              null,
+              null,
+              elementsData.Numbers[10]
+            );
+            dispatch(
+              calculatorSlice.actions.updateNumbers(elementsData.Numbers[10])
+            );
+          }
+        } else {
+          let x = 0;
+          for (let item of breakpoints__width_numbers) {
+            if (coordX > item.x.from && coordX < item.x.to) {
+              let y = 0;
+              for (let point of breakpoints__width_numbers[x].y) {
+                if (
+                  coordY > point.from + numbersHeight &&
+                  coordY < point.to + numbersHeight
+                ) {
+                  drawElements(
+                    context,
+                    inCanvas,
+                    null,
+                    null,
+                    numbersMatrix[x][y]
+                  );
+                  dispatch(
+                    calculatorSlice.actions.updateNumbers(numbersMatrix[x][y])
+                  );
+                  break;
+                }
+                y++;
+              }
+
+              break;
+            }
+            x++;
+          }
         }
       }
     };
@@ -170,7 +270,7 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
     }
 
     return () => canvas.removeEventListener("click", clickHandler);
-  }, [inCanvas, ifWorkingMode, activeEl]);
+  }, [inCanvas, ifWorkingMode, activeEl, selectindexOfNumbers]);
 
   useEffect(() => {
     const canvas = canvasRef.current;

@@ -8,6 +8,12 @@ export const elementsData:IelementsData = {
     Numbers: ['7', '8', '9', '4','5', '6', '1', '2','3', '0', ','],
     Results: ['='],
     }  
+
+export const numbersMatrix = [
+        ['7', '4', '1'],
+        ['8', '5', '2'],
+        ['9', '6', '3'],
+      ];
     
 export const generalPadding = 10;
 export const entities = {

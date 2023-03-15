@@ -8,3 +8,9 @@ export const selectCalculatorActiveEl = (state: RootState) => selectCalculatorMo
 
 export const selectCalculatorInCanvas = (state: RootState) => selectCalculatorModule(state).inCanvas;
 export const selectCanvasHeight = (state: RootState) => selectCalculatorModule(state).height;
+
+export const selectNumbersvalue = (state: RootState) => selectCalculatorModule(state).Numbersvalue;
+
+
+
+export const selectindexOfNumbers = (state: RootState) => selectCalculatorInCanvas(state).indexOf('Numbers');

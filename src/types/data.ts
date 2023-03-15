@@ -33,6 +33,29 @@ export interface Ibreakpoints__width {
       to: number;
     }
 
+export interface Ibreakpoints__width_operations {
+  x: {
+    from: number;
+    to: number;
+  }
+  y: {
+    from: number
+    to: number
+    }
+  }
+
+export interface Ibreakpoints__width_numbers {
+  x: {
+    from: number;
+    to: number;
+  }
+  y: {
+    from: number
+    to: number
+    }[]
+}
+
+
 export interface IelementsData {
   Display: string[];
   Operations: string[];
@@ -40,3 +63,24 @@ export interface IelementsData {
   Results: string[];
   [key: string]: string[];
   }  
+
+ export interface Ibutton {
+    (context: CanvasRenderingContext2D, 
+      i:number, 
+      element:any, 
+      currentHeight:number,
+      w:number,
+      h:number,
+      shift: number,
+      txtShift:number): void
+  }
+
+
+export  interface IdrawElements {
+    (context: CanvasRenderingContext2D | null, 
+      inCanvas:string[], 
+      activeEl:string | null,
+      clickedOn?: string | null,
+      value?: string,
+      ): void
+  }

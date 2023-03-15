@@ -1,6 +1,7 @@
 import DropIcon from "../assets/images/drop.png";
 import {canvasSize} from '../components/constants/canvasSize'
 import { elements, elementsData, entities, generalPadding } from "../components/constants/elementsSettings";
+import { Ibutton, IdrawElements } from "../types/data";
 let padding = generalPadding;
 
 export const fillBlue = (context: CanvasRenderingContext2D | null) => {
@@ -52,34 +53,6 @@ export const fillBlue = (context: CanvasRenderingContext2D | null) => {
 
   };
 
-
-
-
-
-
-  interface Ibutton {
-    (context: CanvasRenderingContext2D, 
-      i:number, 
-      element:any, 
-      currentHeight:number,
-      w:number,
-      h:number,
-      shift: number,
-      txtShift:number): void
-  }
-
-
-  interface IdrawElements {
-    (context: CanvasRenderingContext2D | null, 
-      inCanvas:string[], 
-      activeEl:string,
-      clickedOn?: string
-      ): void
-  }
-
-
-
-
   let drawButton:Ibutton = function (context, i, element, currentHeight, w, h, shift, txtShift, ) {
     context.strokeStyle = "#e2e3e5";
     context.lineWidth = 1;
@@ -92,12 +65,12 @@ export const fillBlue = (context: CanvasRenderingContext2D | null) => {
   
   }
 
-  export const drawElements:IdrawElements = (context, inCanvas, activeEl, clickedOn) => {
+  export const drawElements:IdrawElements = (context, inCanvas, activeEl, clickedOn, value) => {
 if (clickedOn) {
   console.log(clickedOn);
 }
 let elList = [...inCanvas];
-if (!clickedOn) {
+if (!clickedOn && activeEl) {
 
   (activeEl === 'Display') ? elList.unshift(activeEl) : elList.push(activeEl);
   
@@ -120,7 +93,11 @@ if (!clickedOn) {
         context.fill();
         context.font = "35px Inter-ExtraBold";
         context.fillStyle = "#000000";
-        context.fillText("0", canvasSize.width-20, currentHeight+32);
+        let val = "0";
+        if(value) {
+          val=value;
+        }
+        context.fillText(val, canvasSize.width-20, currentHeight+32);
         currentHeight = currentHeight + element.height + padding;
         
         break;
