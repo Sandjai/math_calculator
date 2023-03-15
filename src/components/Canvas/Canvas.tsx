@@ -9,6 +9,7 @@ import {
   drawDefault,
   drawLine,
   drawElements,
+  clearRect,
 } from "../../utils/drawCanvas";
 import { canvasSize } from "../constants/canvasSize";
 import { useSelector } from "react-redux";
@@ -30,7 +31,6 @@ import { modes } from "../constants/calcModes";
 import {
   ICanvasProps,
   Ibreakpoints__width,
-  Ibreakpoints__width_operations,
   Ibreakpoints__width_numbers,
   objArr,
 } from "../../types/data";
@@ -40,15 +40,19 @@ import { calculatorSlice } from "../../store/calculator";
 export const Canvas: React.FunctionComponent<ICanvasProps> = ({
   className,
 }) => {
-  const mode = useSelector(selectCalculatorMode);
-  const [ifWorkingMode, setifWorkingMode] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null!);
-  let activeEl = useSelector(selectCalculatorActiveEl);
+
+  const mode = useSelector(selectCalculatorMode);
   const inCanvas = useSelector(selectCalculatorInCanvas);
   const canvasElementsHeight = useSelector(selectCanvasHeight);
-  let dispatch = useDispatch();
-  //const numbersValue = useSelector(selectNumbersvalue);
   const numbersIndex: number = useSelector(selectindexOfNumbers);
+
+  let activeEl = useSelector(selectCalculatorActiveEl);
+
+  let dispatch = useDispatch();
+
+  const [ifWorkingMode, setifWorkingMode] = useState(false);
+  const [numbersValue, setnumbersValue] = useState("");
 
   useEffect(() => {
     const ifWorkingMode = mode === modes.runtime ? true : false;
@@ -75,7 +79,6 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
     const dragLeaveHandler = () => {
       if (context && activeEl) {
         if (inCanvas.length === 0) {
-          fillWhite(context);
           drawDefault(context);
         } else {
           drawElements(context, inCanvas, activeEl);
@@ -105,6 +108,7 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
     const context: CanvasRenderingContext2D | null = canvas
       ? canvas.getContext("2d")
       : null;
+
     const arr: objArr[] = [];
 
     let breakpoints__height: number[] = [];
@@ -141,9 +145,6 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
       },
     ];
 
-    // { from: 79, to: 150 },
-    // { from: 154, to: 225 },
-
     for (let item of inCanvas) {
       let objItem = {
         id: item,
@@ -160,6 +161,7 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
 
     const clickHandler = (e: MouseEvent): void => {
       const target = e.target as any;
+
       const coordY = e.pageY - target.offsetTop;
       const coordX = e.pageX - target.offsetLeft;
       let clickedOnComponent: string | null = null;
@@ -178,8 +180,7 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
       for (let item of arr) {
         if (activeEl && coordY <= item.height + getHeight(ind)) {
           clickedOnComponent = item.id;
-          fillWhite(context);
-          drawElements(context, inCanvas, activeEl, item.id);
+          drawElements(context, inCanvas, activeEl, item.id, numbersValue);
           break;
         }
         ind++;
@@ -189,9 +190,6 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
         let index = 0;
         for (let operation of breakpoints__width_operations) {
           if (coordX > operation.from && coordX < operation.to) {
-            console.log(elementsData.Operations[index]);
-            fillWhite(context);
-
             dispatch(
               calculatorSlice.actions.updateOperations(
                 elementsData.Operations[index]
@@ -207,29 +205,36 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
         const numbersHeight = getHeight(numbersIndex);
         if (coordY > 175 + numbersHeight && coordY < 223 + numbersHeight) {
           if (coordX > 4 && coordX < 150) {
-            fillWhite(context);
-            drawElements(
-              context,
-              inCanvas,
-              null,
-              null,
-              elementsData.Numbers[9]
-            );
+            console.log(numbersValue + elementsData.Numbers[9]);
+            setnumbersValue(elementsData.Numbers[9] + numbersValue);
             dispatch(
               calculatorSlice.actions.updateNumbers(elementsData.Numbers[9])
             );
-          }
-          if (coordX > 154 && coordX < 225) {
-            fillWhite(context);
+
+            clearRect(context);
+
             drawElements(
               context,
               inCanvas,
               null,
               null,
-              elementsData.Numbers[10]
+              numbersValue + elementsData.Numbers[9]
             );
+          }
+          if (coordX > 154 && coordX < 225) {
+            setnumbersValue(elementsData.Numbers[10] + numbersValue);
             dispatch(
               calculatorSlice.actions.updateNumbers(elementsData.Numbers[10])
+            );
+
+            clearRect(context);
+
+            drawElements(
+              context,
+              inCanvas,
+              null,
+              null,
+              numbersValue + elementsData.Numbers[10]
             );
           }
         } else {
@@ -242,16 +247,20 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
                   coordY > point.from + numbersHeight &&
                   coordY < point.to + numbersHeight
                 ) {
+                  setnumbersValue(numbersValue + numbersMatrix[x][y]);
+                  dispatch(
+                    calculatorSlice.actions.updateNumbers(numbersMatrix[x][y])
+                  );
+
+                  clearRect(context);
                   drawElements(
                     context,
                     inCanvas,
                     null,
                     null,
-                    numbersMatrix[x][y]
+                    numbersValue + numbersMatrix[x][y]
                   );
-                  dispatch(
-                    calculatorSlice.actions.updateNumbers(numbersMatrix[x][y])
-                  );
+
                   break;
                 }
                 y++;
@@ -270,7 +279,7 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
     }
 
     return () => canvas.removeEventListener("click", clickHandler);
-  }, [inCanvas, ifWorkingMode, activeEl, selectindexOfNumbers]);
+  }, [inCanvas, ifWorkingMode, activeEl, selectindexOfNumbers, numbersValue]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
