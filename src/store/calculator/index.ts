@@ -7,8 +7,11 @@ interface IinitialState {
   inCanvas: any;
   activeEl: null | string;
   height: number;
-  Operationsvalue: string;
+  Operationsvalue: string | null;
   Numbersvalue: string;
+  prevNumbersvalue: string;
+  Resultvalue: any;
+  needToCount: any[];
   dbClickPosition: number[];
 }
 
@@ -17,8 +20,11 @@ const initialState: IinitialState = {
   inCanvas: [],
   activeEl: null,
   height: 0,
-  Operationsvalue: "",
+  Operationsvalue: null,
   Numbersvalue: "",
+  prevNumbersvalue: "",
+  Resultvalue: 0,
+  needToCount: [],
   dbClickPosition: [],
 };
 
@@ -59,13 +65,87 @@ export const calculatorSlice = createSlice({
     },
 
     updateOperations: (state, action) => {
-      state.Operationsvalue = action.payload;
+      if (state.prevNumbersvalue === state.Numbersvalue) {
+        if (action.payload) state.Operationsvalue = action.payload;
+        return;
+      }
+
+      if (state.Operationsvalue) {
+        state.needToCount.push(state.Operationsvalue);
+        if (action.payload) state.Operationsvalue = action.payload;
+        state.needToCount.push(state.Numbersvalue);
+      }
+
+      if (!state.Operationsvalue) {
+        state.prevNumbersvalue = state.Numbersvalue;
+        state.needToCount.push(state.prevNumbersvalue);
+        if (action.payload) state.Operationsvalue = action.payload;
+      }
+
+      state.prevNumbersvalue = state.Numbersvalue;
     },
 
     updateNumbers: (state, action) => {
-      console.log(state.Numbersvalue);
-      state.Numbersvalue += action.payload;
-      console.log(state.Numbersvalue);
+      if (state.prevNumbersvalue === state.Numbersvalue) {
+        if (action.payload) state.Numbersvalue = action.payload;
+      } else {
+        if (action.payload) state.Numbersvalue += action.payload;
+      }
+
+      // if (state.Operationsvalue) {
+      //   state.needToCount.push(state.Numbersvalue);
+      //   state.needToCount.push(state.Operationsvalue);
+      //   state.needToCount.push(action.payload);
+      //   state.Operationsvalue = "";
+      //   state.Numbersvalue = action.payload;
+      // } else {
+      //   state.Numbersvalue += action.payload;
+      // }
+    },
+
+    updateResult: (state, action) => {
+      state.needToCount.push(state.Operationsvalue);
+      state.needToCount.push(state.Numbersvalue);
+
+      let result = 0,
+        num1 = 0;
+
+      let math_symb: string | null = null;
+      state.needToCount.forEach((item, i) => {
+        if (i === 0) {
+          num1 = parseFloat(item.replace(",", "."));
+          // alert(num1);
+        }
+
+        if (i !== 0 && i % 2 === 1) {
+          math_symb = item;
+        }
+        if (i !== 0 && i % 2 === 0) {
+          let num2 = parseFloat(item.replace(",", "."));
+          if (math_symb === null) return;
+          console.log(math_symb, "math_symb");
+          switch (math_symb) {
+            case "+":
+              result = Number(num1) + Number(num2);
+              break;
+            case "-":
+              result = Number(num1) - Number(num2);
+              break;
+            case "/":
+              result = Number(num1) / Number(num2);
+              break;
+            case "X":
+              result = Number(num1) * Number(num2);
+              break;
+            default:
+              break;
+          }
+
+          state.Resultvalue = result.toString().replace(".", ",");
+
+          math_symb = null;
+        }
+      });
     },
 
     dbClickPosition: (state, action) => {

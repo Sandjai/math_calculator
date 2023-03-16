@@ -21,3 +21,6 @@ export const selectindexOfNumbers = (state: RootState) =>
 
 export const selectdbClickPosition = (state: RootState) =>
   selectCalculatorModule(state).dbClickPosition;
+
+export const selectCalculatorResults = (state: RootState) =>
+  selectCalculatorModule(state).Resultvalue;
