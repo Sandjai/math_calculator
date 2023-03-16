@@ -19,6 +19,7 @@ import {
   selectCalculatorMode,
   selectCanvasHeight,
   selectNumbersvalue,
+  selectdbClickPosition,
   selectindexOfNumbers,
 } from "../../store/calculator/selectors";
 import {
@@ -33,6 +34,7 @@ import {
   Ibreakpoints__width,
   Ibreakpoints__width_numbers,
   objArr,
+  IElHeightArr,
 } from "../../types/data";
 import { useDispatch } from "react-redux";
 import { calculatorSlice } from "../../store/calculator";
@@ -49,7 +51,55 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
 
   let activeEl = useSelector(selectCalculatorActiveEl);
 
+  const dbClickPosition = useSelector(selectdbClickPosition);
   let dispatch = useDispatch();
+
+  const [elHeightArr, setElHeightArr] = useState<any>([]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context: CanvasRenderingContext2D | null = canvas
+      ? canvas.getContext("2d")
+      : null;
+
+    if (dbClickPosition.length) {
+      const canvasFromTop = canvasRef.current.getBoundingClientRect().top;
+
+      let index = 0;
+      for (let item of elHeightArr) {
+        let elements = elHeightArr.slice(0, index + 1);
+        const totalH = elements.reduce(
+          (totalH: number, el: any) => totalH + el.height,
+          0
+        );
+
+        const itemFrom = totalH - +item.height;
+        const itemTo = totalH;
+
+        if (
+          +dbClickPosition[1] - canvasFromTop > itemFrom &&
+          +dbClickPosition[1] - canvasFromTop < itemTo
+        ) {
+          dispatch(calculatorSlice.actions.removeFromCanvas(item.id));
+          dispatch(calculatorSlice.actions.updateHight(item.height));
+
+          setElHeightArr(
+            elHeightArr.filter(
+              (el: { id: string; height: number }) => el.id !== item.id
+            )
+          );
+          fillWhite(context);
+          const filteredinCanvas = inCanvas.filter(
+            (id: string) => id !== item.id
+          );
+          drawElements(context, filteredinCanvas);
+
+          break;
+        }
+        index++;
+      }
+    }
+  }, [dbClickPosition]);
 
   const [ifWorkingMode, setifWorkingMode] = useState(false);
   const [numbersValue, setnumbersValue] = useState("");
@@ -62,6 +112,9 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
   // Drag Events
   useEffect(() => {
     const canvas = canvasRef.current;
+    const context: CanvasRenderingContext2D | null = canvas
+      ? canvas.getContext("2d")
+      : null;
     let el = entities[activeEl as keyof typeof entities];
 
     const dropHandle = () => {
@@ -86,9 +139,6 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
       }
     };
 
-    const context: CanvasRenderingContext2D | null = canvas
-      ? canvas.getContext("2d")
-      : null;
     if (!ifWorkingMode) {
       canvas.addEventListener("dragenter", dragEnterHandler);
       canvas.addEventListener("drop", dropHandle);
@@ -159,7 +209,11 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
       breakpoints__height.push(item.height);
     }
 
+    setElHeightArr(arr);
+
     const clickHandler = (e: MouseEvent): void => {
+      if (mode === modes.constructor) return;
+
       const target = e.target as any;
 
       const coordY = e.pageY - target.offsetTop;
@@ -205,7 +259,6 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
         const numbersHeight = getHeight(numbersIndex);
         if (coordY > 175 + numbersHeight && coordY < 223 + numbersHeight) {
           if (coordX > 4 && coordX < 150) {
-            console.log(numbersValue + elementsData.Numbers[9]);
             setnumbersValue(elementsData.Numbers[9] + numbersValue);
             dispatch(
               calculatorSlice.actions.updateNumbers(elementsData.Numbers[9])

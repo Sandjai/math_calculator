@@ -9,6 +9,7 @@ interface IinitialState {
   height: number;
   Operationsvalue: string;
   Numbersvalue: string;
+  dbClickPosition: number[];
 }
 
 const initialState: IinitialState = {
@@ -18,6 +19,7 @@ const initialState: IinitialState = {
   height: 0,
   Operationsvalue: "",
   Numbersvalue: "",
+  dbClickPosition: [],
 };
 
 export const calculatorSlice = createSlice({
@@ -27,6 +29,10 @@ export const calculatorSlice = createSlice({
   reducers: {
     updateMode: (state, action) => {
       state.mode = action.payload;
+    },
+    updateHight: (state, action) => {
+      console.log("height", action.payload);
+      state.height -= action.payload;
     },
     addToCanvas: (state, action) => {
       if (action.payload) {
@@ -60,6 +66,10 @@ export const calculatorSlice = createSlice({
       console.log(state.Numbersvalue);
       state.Numbersvalue += action.payload;
       console.log(state.Numbersvalue);
+    },
+
+    dbClickPosition: (state, action) => {
+      state.dbClickPosition = [action.payload.pageX, action.payload.pageY];
     },
   },
 });

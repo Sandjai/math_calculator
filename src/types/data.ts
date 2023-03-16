@@ -79,7 +79,7 @@ export interface IdrawElements {
   (
     context: CanvasRenderingContext2D | null,
     inCanvas: string[],
-    activeEl: string | null,
+    activeEl?: string | null,
     clickedOn?: string | null,
     value?: string
   ): void;
@@ -91,4 +91,9 @@ export interface IdrawDisplay {
     element: any,
     value?: string
   ): void;
+}
+
+export interface IElHeightArr {
+  id: string;
+  height: number;
 }

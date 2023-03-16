@@ -8,12 +8,10 @@ import React, {
 
 import styles from "./styles.module.sass";
 import { Display } from "../Display/Display";
-
 import { displaySlice } from "../../store/display";
 import { numbersSlice } from "../../store/numbers";
-import { operationsSlice } from "../../store/operations";
 import { calculatorSlice } from "../../store/calculator";
-import { resultSlice } from "../../store/result";
+
 //import {canvasSlice} from '../../store/canvas'
 import { selectDisplayValue } from "../../store/display/selectors";
 
@@ -35,11 +33,33 @@ interface ICalculatorProps {}
 
 export const Calculator: React.FC<ICalculatorProps> = () => {
   const mode = useSelector(selectCalculatorMode);
+  const canvasRef = useRef<HTMLDivElement>(null);
+
+  const dispatch = useDispatch();
   const [isHidden, setIsHidden] = useState(false);
 
+  function dbClickHandler(event: MouseEvent) {
+    dispatch(
+      calculatorSlice.actions.dbClickPosition({
+        pageX: event.pageX,
+        pageY: event.pageY,
+      })
+    );
+  }
+
   useEffect(() => {
-    const ifHidden = mode === modes.runtime ? true : false;
-    setIsHidden(ifHidden);
+    const ifRuntime = mode === modes.runtime ? true : false;
+
+    setIsHidden(ifRuntime);
+
+    if (mode === modes.constructor && canvasRef.current) {
+      canvasRef.current.addEventListener("dblclick", dbClickHandler);
+    }
+    return () => {
+      if (canvasRef.current) {
+        canvasRef.current.removeEventListener("dblclick", dbClickHandler);
+      }
+    };
   }, [mode]);
 
   return (
@@ -60,7 +80,7 @@ export const Calculator: React.FC<ICalculatorProps> = () => {
             [styles.hidden]: !isHidden,
           })}
         ></div>
-        <div className={styles.calc__canvas}>
+        <div ref={canvasRef} className={styles.calc__canvas}>
           <Canvas />
         </div>
       </div>
