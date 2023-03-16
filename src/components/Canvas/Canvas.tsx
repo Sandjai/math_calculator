@@ -35,7 +35,6 @@ import {
   Ibreakpoints__width,
   Ibreakpoints__width_numbers,
   objArr,
-  IElHeightArr,
 } from "../../types/data";
 import { useDispatch } from "react-redux";
 import { calculatorSlice } from "../../store/calculator";
@@ -99,7 +98,7 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
           const filteredinCanvas = inCanvas.filter(
             (id: string) => id !== item.id
           );
-          drawElements(context, filteredinCanvas);
+          drawElements(context, filteredinCanvas, null, null, numbersValue);
 
           break;
         }
@@ -124,7 +123,7 @@ export const Canvas: React.FunctionComponent<ICanvasProps> = ({
     const dropHandle = () => {
       if (activeEl) {
         fillWhite(context);
-        drawElements(context, inCanvas, activeEl);
+        drawElements(context, inCanvas, activeEl, null, numbersValue);
       }
     };
 

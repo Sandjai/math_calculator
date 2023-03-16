@@ -116,11 +116,18 @@ export const drawElements: IdrawElements = (
           context.fillStyle = "#f3f4f6";
           context.fill();
           context.font = "35px Inter-ExtraBold";
-          context.fillStyle = "#000000";
+
           let val = "0";
           if (value) {
+            if (isNaN(parseFloat(value))) {
+              context.font = "17px Inter-ExtraBold";
+            }
+
             val = value;
           }
+
+          context.fillStyle = "#000000";
+
           context.textAlign = "end";
           context.fillText(val, canvasSize.width - 20, currentHeight + 32);
           currentHeight = currentHeight + element.height + padding;

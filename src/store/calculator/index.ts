@@ -91,16 +91,6 @@ export const calculatorSlice = createSlice({
       } else {
         if (action.payload) state.Numbersvalue += action.payload;
       }
-
-      // if (state.Operationsvalue) {
-      //   state.needToCount.push(state.Numbersvalue);
-      //   state.needToCount.push(state.Operationsvalue);
-      //   state.needToCount.push(action.payload);
-      //   state.Operationsvalue = "";
-      //   state.Numbersvalue = action.payload;
-      // } else {
-      //   state.Numbersvalue += action.payload;
-      // }
     },
 
     updateResult: (state, action) => {
@@ -114,7 +104,6 @@ export const calculatorSlice = createSlice({
       state.needToCount.forEach((item, i) => {
         if (i === 0) {
           num1 = parseFloat(item.replace(",", "."));
-          // alert(num1);
         }
 
         if (i !== 0 && i % 2 === 1) {
@@ -141,7 +130,9 @@ export const calculatorSlice = createSlice({
               break;
           }
 
-          state.Resultvalue = result.toString().replace(".", ",");
+          state.Resultvalue = isFinite(result)
+            ? result.toString().replace(".", ",")
+            : "Не определено";
 
           math_symb = null;
         }

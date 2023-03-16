@@ -8,12 +8,8 @@ import React, {
 
 import styles from "./styles.module.sass";
 import { Display } from "../Display/Display";
-import { displaySlice } from "../../store/display";
-import { numbersSlice } from "../../store/numbers";
-import { calculatorSlice } from "../../store/calculator";
 
-//import {canvasSlice} from '../../store/canvas'
-import { selectDisplayValue } from "../../store/display/selectors";
+import { calculatorSlice } from "../../store/calculator";
 
 import { Operations } from "../Operations/Operations";
 import { Numbers } from "../Numbers/Numbers";

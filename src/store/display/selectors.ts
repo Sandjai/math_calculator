@@ -1,9 +1,6 @@
 import { dragStatuses } from "../constants/dragStatuses";
-import type { RootState, AppDispatch } from '../index'
+import type { RootState, AppDispatch } from "../index";
 
 export const selectDisplayModule = (state: RootState) => state.display;
-export const selectDisplayValue = (state: RootState) => selectDisplayModule(state).value;
-
-
-
-
+export const selectDisplayValue = (state: RootState) =>
+  selectDisplayModule(state).value;

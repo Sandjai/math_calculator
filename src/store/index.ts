@@ -1,15 +1,12 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { displaySlice } from "./display";
-import { numbersSlice } from "./numbers";
 
 import { calculatorSlice } from "./calculator";
-import { operationsSlice } from "./operations";
 
 const rootReducer = combineReducers({
   display: displaySlice.reducer,
-  numbers: numbersSlice.reducer,
-  operations: operationsSlice.reducer,
+
   calculator: calculatorSlice.reducer,
 });
 
